@@ -1,0 +1,13 @@
+---
+
+host: windows
+user: student
+hostname: wsrvadds
+network_adapter: "*"
+dns_addresses:
+  - 127.0.0.1
+  - 1.1.1.1
+log_dns_setup: c:\dns_log.txt
+domain_name: ansible.local
+domain_netbios: WSRV-ADDS
+domain_safemode_password: Password123!

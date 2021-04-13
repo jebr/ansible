@@ -1,0 +1,22 @@
+---
+- name: lininfile
+  hosts: node1
+  remote_user: "{{ user }}"
+  become: true
+  vars_files:
+    - vars-general.yml
+    - vars-lineinfile.yml
+  tasks:
+    - name: Plaats tekst in een bestand en controleer of deze al bestaat
+      lineinfile:
+        path: "{{ path }}"
+        regexp: "^abc"
+#        insertafter: "^abc"
+        line: "{{ text }}"
+        insertafter: ""
+        state: present
+        backup: yes
+      check_mode: no
+#        ignore_errors: yes
+#        changed_when: no
+

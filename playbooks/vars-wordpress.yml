@@ -1,0 +1,14 @@
+---
+
+host: wordpress
+user: student
+password: student
+
+
+network: wordpress
+
+wordpress_ports: 80:80
+
+database: wordpress
+database_user: wordpress
+database_password: MyPassword123

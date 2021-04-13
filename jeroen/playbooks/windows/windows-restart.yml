@@ -1,0 +1,15 @@
+---
+- name: rebootwindows
+  hosts: windows
+  remote_user: "{{ user }}"
+  become: yes
+  become_user: "{{ user }}"
+  become_method: runas
+  gather_facts: no
+  vars_files:
+    - vars-global.yml
+  tasks:
+    - name: Herstart Windows
+      win_reboot:
+        reboot_timeout: 3
+  

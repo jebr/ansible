@@ -1,0 +1,6 @@
+---
+
+host: webserver
+username: student
+password: student
+apache_config_path: "/etc/apache2/apache2.conf"

@@ -1,0 +1,19 @@
+---
+# Deploy all the things!
+- include: playbooks/create_master_node.yml
+- include: playbooks/create_ubuntu_webserver_node.yml
+- include: playbooks/create_alpine_database_node.yml
+- include: playbooks/create_windows_jumpbox_node.yml
+
+- name: Get network information
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Get IP info
+    debug:
+      msg: 
+        - "Master deployed at: {{ master.instance.ipv4 }}"
+        - "Webserver deployed at: {{ webserver.instance.ipv4 }}"
+        - "Database deployed at: {{ wordpress.instance.ipv4 }}"
+        - "Windows deployed at: {{ windows.instance.ipv4 }}"

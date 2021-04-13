@@ -1,0 +1,62 @@
+---
+- name: Webserver node
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+    - seclab.yml
+  tasks:
+  - name: Deploy webserver node from Ubuntu Server 20.04 template
+    vmware_guest:
+      hostname: "{{ hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: False
+      name: "{{ name_prefix }} Webserver node"
+      template: "{{ ubuntu_template }}"
+      datacenter: "{{ datacenter }}"
+      datastore: "{{ datastore }}"
+      folder: "{{ folder }}"
+      resource_pool: "{{ resource_pool }}"
+      state: present
+
+  - name: Attach internet NIC to the virtual machine
+    vmware_guest:
+      hostname: "{{ hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: False
+      name: "{{ name_prefix }} Webserver node"
+      template: "{{ ubuntu_template }}"
+      datacenter: "{{ datacenter }}"
+      datastore: "{{ datastore }}"
+      folder: "{{ folder }}"
+      resource_pool: "{{ resource_pool }}"
+      networks:
+        - name: "{{ network_portgroup_inet }}"
+          connected: yes
+          ip: "192.168.56.176"
+          netmask: "255.255.255.0"
+          gateway: "192.168.56.1"
+      state: present
+
+  - name: Power on Virtual Machine
+    vmware_guest:
+      hostname: "{{ hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: False
+      name: "{{ name_prefix }} Webserver node"
+      template: "{{ ubuntu_template }}"
+      datacenter: "{{ datacenter }}"
+      datastore: "{{ datastore }}"
+      folder: "{{ folder }}"
+      resource_pool: "{{ resource_pool }}"
+      networks:
+        - name: "{{ network_portgroup_inet }}"
+          connected: yes
+          ip: "192.168.56.176"
+          netmask: "255.255.255.0"
+          gateway: "192.168.56.1"
+      state: poweredon
+    register: webserver

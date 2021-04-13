@@ -1,0 +1,22 @@
+---
+- name: install-hyperv
+  hosts: windows
+  remote_user: "{{ user }}"
+  become: yes
+  become_user: "{{ user }}"
+  become_method: runas
+  gather_facts: no
+  vars_files:
+    - vars-global.yml
+  tasks:
+    - name: Installeer Hyper-V
+      win_feature:
+        name: Hyper-V
+        state: present
+        include_sub_features: yes
+        include_management_tools: yes
+      register: win_feature
+   
+    - name: Herstart server wanneer dit nodig is voor het installeren van de rol/feature
+      win_reboot:
+      when: win_feature.reboot_required  
